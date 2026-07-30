@@ -1,24 +1,11 @@
 <template>
-    <!-- ── Loading ──────────────────────────────────────────────────── -->
-    <lwc:if istrue={isLoading}>
-        <div class="slds-align_absolute-center slds-p-vertical_xx-large">
-            <lightning-spinner
-                alternative-text="Loading welcome page"
-                size="medium"
-            ></lightning-spinner>
-        </div>
-    </lwc:if>
 
-    <!-- ── Error ────────────────────────────────────────────────────── -->
+    <!-- Error banner — only shown on wire failure -->
     <lwc:if istrue={hasError}>
-        <div class="slds-box slds-theme_error slds-p-around_medium" role="alert">
+        <div class="slds-box slds-theme_error slds-p-around_medium slds-m-bottom_medium" role="alert">
             <div class="slds-grid slds-grid_vertical-align-center slds-gutters_small">
                 <div class="slds-col slds-grow-none">
-                    <lightning-icon
-                        icon-name="utility:error"
-                        variant="inverse"
-                        size="small"
-                    ></lightning-icon>
+                    <lightning-icon icon-name="utility:error" variant="inverse" size="small"></lightning-icon>
                 </div>
                 <div class="slds-col">
                     <span class="slds-text-body_regular">
@@ -29,42 +16,36 @@
         </div>
     </lwc:if>
 
-    <!-- ── Main Content ─────────────────────────────────────────────── -->
-    <lwc:if istrue={isDataLoaded}>
+    <!-- Hero header — always visible, greeting is time-based so renders immediately -->
+    <div class="slds-box slds-theme_shade slds-p-around_x-large slds-m-bottom_medium">
+        <h1 class="slds-text-heading_large">{greeting}</h1>
+        <lwc:if istrue={companyName}>
+            <p class="slds-text-body_regular slds-text-color_weak slds-m-top_x-small">{companyName}</p>
+        </lwc:if>
+    </div>
 
-        <!-- Greeting Header ------------------------------------------ -->
-        <div class="welcome-header slds-box slds-theme_shade slds-p-around_large slds-m-bottom_medium">
-            <div class="slds-grid slds-grid_vertical-align-center">
-                <div class="slds-col">
-                    <h1 class="slds-text-heading_large">{greeting}</h1>
-                    <lwc:if istrue={companyName}>
-                        <p class="slds-text-body_regular slds-text-color_weak slds-m-top_x-small">
-                            {companyName}
-                        </p>
+    <!-- Two-column body — card shells always visible, content swaps in after load -->
+    <div class="slds-grid slds-wrap slds-gutters_medium">
+
+        <!-- Left: Getting Started -->
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+            <lightning-card title="Getting Started" icon-name="utility:sparkles">
+                <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                    <lwc:if istrue={isLoading}>
+                        <div class="slds-align_absolute-center slds-p-around_large">
+                            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                        </div>
                     </lwc:if>
-                </div>
-            </div>
-        </div>
-
-        <!-- Getting Started Banner (new users ≤ 30 days) -------------- -->
-        <lwc:if istrue={isNewUser}>
-            <div class="slds-m-bottom_medium">
-                <lightning-card
-                    title="Getting Started — First Steps"
-                    icon-name="utility:sparkles"
-                >
-                    <div class="slds-p-horizontal_medium slds-p-bottom_medium">
-                        <p class="slds-text-body_regular slds-m-bottom_medium">
-                            Welcome! We're glad you're here. Use the resources below to hit
-                            the ground running.
-                        </p>
+                    <lwc:if istrue={isDataLoaded}>
+                        <lwc:if istrue={isNewUser}>
+                            <p class="slds-text-body_regular slds-m-bottom_medium">
+                                Welcome! We are glad you are here. Use these resources to hit the ground running.
+                            </p>
+                        </lwc:if>
                         <lwc:if istrue={hasGettingStartedLinks}>
                             <div class="slds-grid slds-wrap slds-gutters_small">
                                 <template for:each={gettingStartedLinks} for:item="link">
-                                    <div
-                                        key={link.label}
-                                        class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-m-bottom_x-small"
-                                    >
+                                    <div key={link.label} class="slds-col slds-size_1-of-1 slds-m-bottom_x-small">
                                         <lightning-button
                                             label={link.label}
                                             icon-name={link.iconName}
@@ -78,73 +59,71 @@
                             </div>
                         </lwc:if>
                         <lwc:if istrue={hasNoGettingStartedLinks}>
-                            <p class="slds-text-color_weak slds-text-body_small">
-                                No onboarding resources are currently configured for your profile.
-                            </p>
+                            <div class="slds-text-align_center slds-p-around_medium">
+                                <lightning-icon icon-name="utility:info_alt" size="small"></lightning-icon>
+                                <p class="slds-text-body_small slds-text-color_weak slds-m-top_x-small">
+                                    No onboarding resources are currently configured for your profile.
+                                </p>
+                            </div>
                         </lwc:if>
-                    </div>
-                </lightning-card>
-            </div>
-        </lwc:if>
-
-        <!-- Need Help Card -------------------------------------------- -->
-        <div class="slds-m-bottom_medium">
-            <lightning-card title="Need Help?" icon-name="utility:help">
-                <div class="slds-p-horizontal_medium slds-p-bottom_medium">
-                    <p class="slds-text-body_regular slds-m-bottom_medium">
-                        Have a question or running into an issue? Our support team is here
-                        for you.
-                    </p>
-                    <lwc:if istrue={hasSupportLinks}>
-                        <div class="slds-grid slds-wrap slds-gutters_small">
-                            <template for:each={supportLinks} for:item="link">
-                                <div
-                                    key={link.label}
-                                    class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-m-bottom_x-small"
-                                >
-                                    <lightning-button
-                                        label={link.label}
-                                        icon-name={link.iconName}
-                                        variant="brand"
-                                        class="slds-size_1-of-1"
-                                        data-url={link.url}
-                                        onclick={handleLinkClick}
-                                    ></lightning-button>
-                                </div>
-                            </template>
-                        </div>
-                    </lwc:if>
-                    <lwc:if istrue={hasNoSupportLinks}>
-                        <lightning-button
-                            label="Contact Support"
-                            icon-name="utility:case"
-                            variant="brand"
-                            onclick={handleContactSupport}
-                        ></lightning-button>
                     </lwc:if>
                 </div>
             </lightning-card>
         </div>
 
-        <!-- Resource Area Sections ------------------------------------ -->
-        <lwc:if istrue={hasAreaSections}>
-            <template for:each={areaSections} for:item="section">
-                <div key={section.area} class="slds-m-bottom_medium">
-                    <lightning-card title={section.label} icon-name={section.iconName}>
-                        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
-                            <template for:each={section.typeGroups} for:item="typeGroup">
-                                <div key={typeGroup.type} class="slds-m-bottom_small">
-                                    <lwc:if istrue={typeGroup.showLabel}>
-                                        <h3 class="slds-text-heading_small slds-m-bottom_x-small slds-m-top_medium resource-type-label">
-                                            {typeGroup.label}
-                                        </h3>
-                                    </lwc:if>
-                                    <div class="slds-grid slds-wrap slds-gutters_small">
+        <!-- Right: Need Help + Area Sections -->
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+
+            <div class="slds-m-bottom_medium">
+                <lightning-card title="Need Help?" icon-name="utility:help">
+                    <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                        <p class="slds-text-body_regular slds-m-bottom_medium">
+                            Have a question or running into an issue? Our support team is here for you.
+                        </p>
+                        <lwc:if istrue={isLoading}>
+                            <div class="slds-align_absolute-center slds-p-around_large">
+                                <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                            </div>
+                        </lwc:if>
+                        <lwc:if istrue={isDataLoaded}>
+                            <lwc:if istrue={hasSupportLinks}>
+                                <div class="slds-grid slds-wrap slds-gutters_small">
+                                    <template for:each={supportLinks} for:item="link">
+                                        <div key={link.label} class="slds-col slds-size_1-of-1 slds-m-bottom_x-small">
+                                            <lightning-button
+                                                label={link.label}
+                                                icon-name={link.iconName}
+                                                variant="brand"
+                                                class="slds-size_1-of-1"
+                                                data-url={link.url}
+                                                onclick={handleLinkClick}
+                                            ></lightning-button>
+                                        </div>
+                                    </template>
+                                </div>
+                            </lwc:if>
+                            <lwc:if istrue={hasNoSupportLinks}>
+                                <lightning-button
+                                    label="Contact Support"
+                                    icon-name="utility:case"
+                                    variant="brand"
+                                    onclick={handleContactSupport}
+                                ></lightning-button>
+                            </lwc:if>
+                        </lwc:if>
+                    </div>
+                </lightning-card>
+            </div>
+
+            <lwc:if istrue={isDataLoaded}>
+                <template for:each={areaSections} for:item="section">
+                    <div key={section.area} class="slds-m-bottom_medium">
+                        <lightning-card title={section.label} icon-name={section.iconName}>
+                            <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                                <template for:each={section.typeGroups} for:item="typeGroup">
+                                    <div key={typeGroup.type} class="slds-grid slds-wrap slds-gutters_small">
                                         <template for:each={typeGroup.links} for:item="link">
-                                            <div
-                                                key={link.label}
-                                                class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-m-bottom_x-small"
-                                            >
+                                            <div key={link.label} class="slds-col slds-size_1-of-1 slds-m-bottom_x-small">
                                                 <lightning-button
                                                     label={link.label}
                                                     icon-name={link.iconName}
@@ -156,33 +135,29 @@
                                             </div>
                                         </template>
                                     </div>
-                                </div>
-                            </template>
+                                </template>
+                            </div>
+                        </lightning-card>
+                    </div>
+                </template>
+
+                <lwc:if istrue={hasNoResources}>
+                    <lightning-card>
+                        <div class="slds-p-around_large slds-text-align_center">
+                            <lightning-icon icon-name="utility:info_alt" size="large"></lightning-icon>
+                            <h2 class="slds-text-heading_small slds-m-top_medium">
+                                No resources are currently available for your profile.
+                            </h2>
+                            <p class="slds-text-body_regular slds-text-color_weak slds-m-top_small">
+                                Please contact your Salesforce administrator if you believe this is incorrect.
+                            </p>
                         </div>
                     </lightning-card>
-                </div>
-            </template>
-        </lwc:if>
+                </lwc:if>
+            </lwc:if>
 
-        <!-- Zero State ----------------------------------------------- -->
-        <lwc:if istrue={hasNoResources}>
-            <lightning-card>
-                <div class="slds-p-around_large slds-text-align_center">
-                    <lightning-icon
-                        icon-name="utility:info_alt"
-                        size="large"
-                        class="slds-m-bottom_medium"
-                    ></lightning-icon>
-                    <h2 class="slds-text-heading_small slds-m-top_medium">
-                        No resources are currently available for your profile.
-                    </h2>
-                    <p class="slds-text-body_regular slds-text-color_weak slds-m-top_small">
-                        Please contact your Salesforce administrator if you believe
-                        this is incorrect.
-                    </p>
-                </div>
-            </lightning-card>
-        </lwc:if>
+        </div>
 
-    </lwc:if>
+    </div>
+
 </template>

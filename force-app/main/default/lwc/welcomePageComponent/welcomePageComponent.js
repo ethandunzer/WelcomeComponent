@@ -14,14 +14,8 @@ const AREA_CONFIG = {
     NZC: { label: 'NZC Resources', iconName: 'utility:world'}
 };
 
-/**
- * Order in which Resource_Type__c groups are rendered inside each area section.
- * For new users, Getting Started is surfaced in the top banner so Training is shown
- * first in area sections.  For existing users, Getting Started is rendered first
- * inside each section, followed by Training.
- */
-const TYPE_ORDER_NEW_USER      = ['Training', 'Getting Started'];
-const TYPE_ORDER_EXISTING_USER = ['Getting Started', 'Training'];
+/** Order in which Resource_Type__c groups are rendered inside each area section. */
+const TYPE_ORDER = ['Training'];
 
 export default class WelcomePageComponent extends NavigationMixin(LightningElement) {
 
@@ -105,17 +99,13 @@ export default class WelcomePageComponent extends NavigationMixin(LightningEleme
     // ── Area sections ────────────────────────────────────────────────────
 
     /**
-     * Links available for area sections:
-     * – Support links go to the Need Help card, so always excluded here.
-     * – For new users, Getting Started links are displayed in the top banner,
-     *   so they are also excluded from area sections.
+     * Links for right-panel area sections.
+     * Support goes to the Need Help card; Getting Started goes to the left panel.
      */
     get areaSectionLinks() {
-        let links = this.allLinks.filter(l => l.resourceType !== 'Support');
-        if (this.isNewUser) {
-            links = links.filter(l => l.resourceType !== 'Getting Started');
-        }
-        return links;
+        return this.allLinks.filter(
+            l => l.resourceType !== 'Support' && l.resourceType !== 'Getting Started'
+        );
     }
 
     /**
@@ -132,8 +122,6 @@ export default class WelcomePageComponent extends NavigationMixin(LightningEleme
             }
             areaMap.get(area).push(link);
         }
-
-        const typeOrder = this.isNewUser ? TYPE_ORDER_NEW_USER : TYPE_ORDER_EXISTING_USER;
 
         return Array.from(areaMap.entries()).map(([area, areaLinks]) => {
             const config = AREA_CONFIG[area] ?? { label: `${area} Resources`, iconName: 'utility:apps' };
@@ -152,7 +140,7 @@ export default class WelcomePageComponent extends NavigationMixin(LightningEleme
             const typeGroups = [];
             const hasMultipleTypes = typeMap.size > 1;
 
-            for (const type of typeOrder) {
+            for (const type of TYPE_ORDER) {
                 if (typeMap.has(type)) {
                     typeGroups.push({
                         type,
