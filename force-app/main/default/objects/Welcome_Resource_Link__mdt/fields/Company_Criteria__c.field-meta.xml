@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Company_Criteria__c</fullName>
+    <label>Company Criteria</label>
+    <description>Exact company name (matches User.CompanyName, case-insensitive) that can see this resource. Leave blank to show the link to users from all companies.</description>
+    <type>Text</type>
+    <length>255</length>
+    <unique>false</unique>
+    <externalId>false</externalId>
+</CustomField>
