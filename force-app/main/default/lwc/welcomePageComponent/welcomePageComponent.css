@@ -32,12 +32,29 @@
     background-color: #dddbda;
 }
 
-.action-tile-label {
-    margin-left: 0.75rem;
+.action-tile-content {
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
+    margin-left: 0.75rem;
+    min-width: 0;
+}
+
+.action-tile-label {
     font-size: 0.875rem;
     font-weight: 600;
     color: #181818;
+}
+
+.quick-link-label {
+    margin-left: 1rem;
+}
+
+.action-tile-description {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: #706e6b;
+    margin-top: 0.1rem;
 }
 
 .action-tile-pill {

@@ -4,7 +4,7 @@
     <div class="slds-box slds-theme_shade slds-p-around_x-large slds-m-bottom_medium">
         <h1 class="slds-text-heading_large">{greeting}</h1>
         <lwc:if istrue={companyName}>
-            <p class="slds-text-body_regular slds-text-color_weak slds-m-top_x-small">Your resources, training, and support — all in one place.</p>
+            <p class="slds-text-body_regular slds-text-color_weak slds-m-top_x-small">Your salesforce resources, training, and support — all in one place.</p>
         </lwc:if>
     </div>
 
@@ -23,19 +23,19 @@
                     <div class="slds-col slds-size_1-of-3">
                         <a class="action-tile" href="/lightning/settings/personal/CollaborationEmailSettings/home" target="_blank">
                             <lightning-icon icon-name="standard:email" size="large"></lightning-icon>
-                            <span class="action-tile-label">Email Notifications</span>
+                            <span class="action-tile-label quick-link-label">Email Notifications</span>
                         </a>
                     </div>
                     <div class="slds-col slds-size_1-of-3">
                         <a class="action-tile" href="/lightning/settings/personal/LanguageAndTimeZone/home" target="_blank">
                             <lightning-icon icon-name="standard:location" size="large"></lightning-icon>
-                            <span class="action-tile-label">Language &amp; Timezones</span>
+                            <span class="action-tile-label quick-link-label">Language &amp; Timezones</span>
                         </a>
                     </div>
                     <div class="slds-col slds-size_1-of-3">
                         <a class="action-tile" href="https://opusagency.my.site.com/Support/s/" target="_blank">
                             <lightning-icon icon-name="standard:knowledge" size="large"></lightning-icon>
-                            <span class="action-tile-label">IT Support</span>
+                            <span class="action-tile-label quick-link-label">IT Support</span>
                         </a>
                     </div>
                 </div>
@@ -47,14 +47,19 @@
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
                     <lightning-card>
                         <h2 slot="title" class="card-title">
-                            <lightning-icon icon-name="utility:sparkles" size="medium"></lightning-icon>
+                            <lightning-icon icon-name="utility:bookmark_alt" size="medium"></lightning-icon>
                             <span>Getting Started</span>
                         </h2>
                         <div class="slds-p-horizontal_medium slds-p-bottom_medium slds-p-top_medium">
                             <template for:each={gettingStartedLinks} for:item="link">
                                 <a key={link.label} class="action-tile slds-m-bottom_x-small" href={link.url} target="_blank">
                                     <lightning-icon icon-name={link.iconName} size="small"></lightning-icon>
-                                    <span class="action-tile-label">{link.label}</span>
+                                    <span class="action-tile-content">
+                                        <span class="action-tile-label">{link.label}</span>
+                                        <lwc:if istrue={link.description}>
+                                            <span class="action-tile-description">{link.description}</span>
+                                        </lwc:if>
+                                    </span>
                                     <span class="action-tile-pill">{link.salesforceArea}</span>
                                 </a>
                             </template>
@@ -73,7 +78,12 @@
                             <template for:each={trainingLinks} for:item="link">
                                 <a key={link.label} class="action-tile slds-m-bottom_x-small" href={link.url} target="_blank">
                                     <lightning-icon icon-name={link.iconName} size="small"></lightning-icon>
-                                    <span class="action-tile-label">{link.label}</span>
+                                    <span class="action-tile-content">
+                                        <span class="action-tile-label">{link.label}</span>
+                                        <lwc:if istrue={link.description}>
+                                            <span class="action-tile-description">{link.description}</span>
+                                        </lwc:if>
+                                    </span>
                                     <span class="action-tile-pill">{link.salesforceArea}</span>
                                 </a>
                             </template>
@@ -89,13 +99,18 @@
             <lightning-card>
                 <h2 slot="title" class="card-title">
                     <lightning-icon icon-name="utility:help" size="medium"></lightning-icon>
-                    <span>Need Help?</span>
+                    <span>Need Help</span>
                 </h2>
                 <div class="slds-p-horizontal_medium slds-p-bottom_medium slds-p-top_medium">
                     <template for:each={supportLinks} for:item="link">
                         <a key={link.label} class="action-tile slds-m-bottom_x-small" href={link.url} target="_blank">
                             <lightning-icon icon-name={link.iconName} size="small"></lightning-icon>
-                            <span class="action-tile-label">{link.label}</span>
+                            <span class="action-tile-content">
+                                <span class="action-tile-label">{link.label}</span>
+                                <lwc:if istrue={link.description}>
+                                    <span class="action-tile-description">{link.description}</span>
+                                </lwc:if>
+                            </span>
                             <span class="action-tile-pill">{link.salesforceArea}</span>
                         </a>
                     </template>
