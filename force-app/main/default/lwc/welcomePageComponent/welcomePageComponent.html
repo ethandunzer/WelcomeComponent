@@ -19,25 +19,15 @@
                     <lightning-icon icon-name="utility:sparkles" size="medium"></lightning-icon>
                     <span>Quick Links</span>
                 </h2>
-                <div class="slds-grid slds-gutters_medium slds-p-horizontal_medium slds-p-bottom_medium slds-p-top_medium">
-                    <div class="slds-col slds-size_1-of-3">
-                        <a class="action-tile" href="/lightning/settings/personal/CollaborationEmailSettings/home" target="_blank">
-                            <lightning-icon icon-name="standard:email" size="large"></lightning-icon>
-                            <span class="action-tile-label quick-link-label">Email Notifications</span>
-                        </a>
-                    </div>
-                    <div class="slds-col slds-size_1-of-3">
-                        <a class="action-tile" href="/lightning/settings/personal/LanguageAndTimeZone/home" target="_blank">
-                            <lightning-icon icon-name="standard:location" size="large"></lightning-icon>
-                            <span class="action-tile-label quick-link-label">Language &amp; Timezones</span>
-                        </a>
-                    </div>
-                    <div class="slds-col slds-size_1-of-3">
-                        <a class="action-tile" href="https://opusagency.my.site.com/Support/s/" target="_blank">
-                            <lightning-icon icon-name="standard:knowledge" size="large"></lightning-icon>
-                            <span class="action-tile-label quick-link-label">IT Support</span>
-                        </a>
-                    </div>
+                <div class="slds-grid slds-wrap slds-gutters_medium slds-p-horizontal_medium slds-p-bottom_medium slds-p-top_medium">
+                    <template for:each={quickLinks} for:item="link">
+                        <div key={link.label} class="slds-col slds-size_1-of-3 slds-m-bottom_medium">
+                            <a class="action-tile" href={link.url} target="_blank">
+                                <lightning-icon icon-name={link.iconName} size="large"></lightning-icon>
+                                <span class="action-tile-label quick-link-label">{link.label}</span>
+                            </a>
+                        </div>
+                    </template>
                 </div>
             </lightning-card>
 

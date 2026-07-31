@@ -74,6 +74,10 @@ export default class WelcomePageComponent extends LightningElement {
         return (this.resourceLinks ?? []).filter(l => l.resourceType === 'Support');
     }
 
+    get quickLinks() {
+        return (this.resourceLinks ?? []).filter(l => l.resourceType === 'Quick Link');
+    }
+
     // ── Private helpers ───────────────────────────────────────────────────
 
     _showError(title, error) {
