@@ -26,7 +26,10 @@ export default class WelcomePageComponent extends LightningElement {
     @wire(getResourceLinks)
     wiredResourceLinks({ data, error }) {
         if (data) {
-            this.resourceLinks = data;
+            this.resourceLinks = data.map(l => ({
+                ...l,
+                iconName: l.iconName || 'utility:chevronright'
+            }));
         } else if (error) {
             this.resourceLinks = undefined;
             console.error('WelcomePageComponent — getResourceLinks error:', JSON.stringify(error));
