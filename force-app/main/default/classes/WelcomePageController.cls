@@ -64,11 +64,11 @@ public with sharing class WelcomePageController {
     }
 
     private static final Set<String> INTERNAL_ROLES = new Set<String>{
-        'Share All', 'System Admin', 'Internal - Users'
+        'Share All', 'System Admins', 'Internal - Users'
     };
 
     private static final Set<String> EXTERNAL_ROLES = new Set<String>{
-        'Share All', 'System Admin', 'External - Users'
+        'Share All', 'System Admins', 'External - Users'
     };
 
     private static Boolean isVisibleForUserType(String userType, String roleName) {
