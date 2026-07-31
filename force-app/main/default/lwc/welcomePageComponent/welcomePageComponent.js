@@ -47,6 +47,15 @@ export default class WelcomePageComponent extends NavigationMixin(LightningEleme
         return !this.isLoading && this.error != null;
     }
 
+    get errorMessage() {
+        if (!this.error) return '';
+        const body = this.error.body;
+        if (Array.isArray(body) && body.length > 0) {
+            return body.map(e => e.message).join(' | ');
+        }
+        return body?.message ?? this.error.message ?? 'An unexpected error occurred.';
+    }
+
     // ── User context ────────────────────────────────────────────────────
 
     get greeting() {

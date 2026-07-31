@@ -2,6 +2,7 @@ public with sharing class WelcomePageController {
 
     @AuraEnabled(cacheable=true)
     public static WelcomePageWrapper getWelcomePageData() {
+        try {
         User runningUser = [
             SELECT Id, FirstName, CompanyName, CreatedDate, Profile.Name,
                    CRM_User__c, PSA_User__c, SMS_User__c, OBO_User__c,
@@ -49,6 +50,9 @@ public with sharing class WelcomePageController {
         }
 
         return wrapper;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getTypeName() + ': ' + e.getMessage());
+        }
     }
 
     private static Boolean isLinkVisible(Welcome_Resource_Link__mdt link, User u) {
