@@ -23,8 +23,17 @@ public with sharing class WelcomePageController {
     @AuraEnabled(cacheable=true)
     public static List<ResourceLink> getResourceLinks() {
         try {
+            User runningUser = [
+                SELECT UserRole.Name
+                FROM User
+                WHERE Id = :UserInfo.getUserId()
+                LIMIT 1
+            ];
+            String roleName = runningUser.UserRole?.Name;
+
             List<Welcome_Resource_Link__mdt> records = [
-                SELECT MasterLabel, URL__c, Icon_Name__c, Resource_Type__c, Salesforce_Area__c, Description__c, Sort_Order__c
+                SELECT MasterLabel, URL__c, Icon_Name__c, Resource_Type__c,
+                       Salesforce_Area__c, Description__c, User_Type__c, Sort_Order__c
                 FROM Welcome_Resource_Link__mdt
                 WHERE Is_Active__c = true
                 ORDER BY Sort_Order__c ASC NULLS LAST
@@ -32,6 +41,9 @@ public with sharing class WelcomePageController {
 
             List<ResourceLink> links = new List<ResourceLink>();
             for (Welcome_Resource_Link__mdt r : records) {
+                if (!isVisibleForUserType(r.User_Type__c, roleName)) {
+                    continue;
+                }
                 ResourceLink rl   = new ResourceLink();
                 rl.label          = r.MasterLabel;
                 rl.url            = r.URL__c;
@@ -47,6 +59,27 @@ public with sharing class WelcomePageController {
         } catch (Exception e) {
             throw new AuraHandledException(e.getTypeName() + ': ' + e.getMessage());
         }
+    }
+
+    private static final Set<String> INTERNAL_ROLES = new Set<String>{
+        'Share All', 'System Admin', 'Internal - Users'
+    };
+
+    private static final Set<String> EXTERNAL_ROLES = new Set<String>{
+        'Share All', 'System Admin', 'External - Users'
+    };
+
+    private static Boolean isVisibleForUserType(String userType, String roleName) {
+        if (String.isBlank(userType) || userType == 'Both') {
+            return true;
+        }
+        if (userType == 'Internal') {
+            return INTERNAL_ROLES.contains(roleName);
+        }
+        if (userType == 'External') {
+            return EXTERNAL_ROLES.contains(roleName);
+        }
+        return false;
     }
 
     public class UserContext {

@@ -6,6 +6,7 @@
     font-weight: 700;
     color: #181818;
     margin: 0;
+    padding-top: 0.5rem;
 }
 
 .action-tile {
@@ -59,10 +60,10 @@
 
 .action-tile-pill {
     margin-left: 0.5rem;
-    padding: 0.1rem 0.6rem;
+    padding: 0.25rem 0.85rem;
     background-color: #e0e5ee;
     border-radius: 999px;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     font-weight: 500;
     color: #3e3e3c;
     white-space: nowrap;
