@@ -1,0 +1,30 @@
+.action-tile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    background-color: #f3f3f3;
+    border: 1px solid #dddbda;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    text-align: left;
+    text-decoration: none;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.action-tile:hover {
+    background-color: #e8e8e8;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.action-tile:active {
+    background-color: #dddbda;
+}
+
+.action-tile-label {
+    margin-left: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #181818;
+}
