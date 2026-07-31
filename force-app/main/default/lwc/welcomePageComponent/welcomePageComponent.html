@@ -14,8 +14,12 @@
         <!-- Left 70% — inner 50/50 -->
         <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12">
             
-            <lightning-card title="Quick Links" icon-name="utility:sparkles">
-                <div class="slds-grid slds-gutters_medium slds-p-horizontal_medium slds-p-bottom_medium">
+            <lightning-card>
+                <h2 slot="title" class="card-title">
+                    <lightning-icon icon-name="utility:sparkles" size="medium"></lightning-icon>
+                    <span>Quick Links</span>
+                </h2>
+                <div class="slds-grid slds-gutters_medium slds-p-horizontal_medium slds-p-bottom_medium slds-p-top_medium">
                     <div class="slds-col slds-size_1-of-3">
                         <a class="action-tile" href="/lightning/settings/personal/CollaborationEmailSettings/home" target="_blank">
                             <lightning-icon icon-name="standard:email" size="large"></lightning-icon>
@@ -41,8 +45,12 @@
 
                 <!-- Left 50: Getting Started -->
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
-                    <lightning-card title="Getting Started" icon-name="utility:sparkles">
-                        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                    <lightning-card>
+                        <h2 slot="title" class="card-title">
+                            <lightning-icon icon-name="utility:sparkles" size="medium"></lightning-icon>
+                            <span>Getting Started</span>
+                        </h2>
+                        <div class="slds-p-horizontal_medium slds-p-bottom_medium slds-p-top_medium">
                             <template for:each={gettingStartedLinks} for:item="link">
                                 <a key={link.label} class="action-tile slds-m-bottom_x-small" href={link.url} target="_blank">
                                     <lightning-icon icon-name={link.iconName} size="small"></lightning-icon>
@@ -56,8 +64,12 @@
 
                 <!-- Right 50: Other Resources -->
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
-                    <lightning-card title="Resources &amp; Training" icon-name="utility:apps">
-                        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                    <lightning-card>
+                        <h2 slot="title" class="card-title">
+                            <lightning-icon icon-name="utility:apps" size="medium"></lightning-icon>
+                            <span>Resources &amp; Training</span>
+                        </h2>
+                        <div class="slds-p-horizontal_medium slds-p-bottom_medium slds-p-top_medium">
                             <template for:each={trainingLinks} for:item="link">
                                 <a key={link.label} class="action-tile slds-m-bottom_x-small" href={link.url} target="_blank">
                                     <lightning-icon icon-name={link.iconName} size="small"></lightning-icon>
@@ -74,8 +86,12 @@
 
         <!-- Right 30%: Need Help / Support -->
         <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
-            <lightning-card title="Need Help?" icon-name="utility:help">
-                <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+            <lightning-card>
+                <h2 slot="title" class="card-title">
+                    <lightning-icon icon-name="utility:help" size="medium"></lightning-icon>
+                    <span>Need Help?</span>
+                </h2>
+                <div class="slds-p-horizontal_medium slds-p-bottom_medium slds-p-top_medium">
                     <template for:each={supportLinks} for:item="link">
                         <a key={link.label} class="action-tile slds-m-bottom_x-small" href={link.url} target="_blank">
                             <lightning-icon icon-name={link.iconName} size="small"></lightning-icon>

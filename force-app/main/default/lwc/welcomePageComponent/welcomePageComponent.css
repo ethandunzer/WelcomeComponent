@@ -1,3 +1,13 @@
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #181818;
+    margin: 0;
+}
+
 .action-tile {
     display: flex;
     flex-direction: row;
