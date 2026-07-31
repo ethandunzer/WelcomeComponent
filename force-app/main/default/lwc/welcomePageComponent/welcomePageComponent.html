@@ -1,0 +1,127 @@
+﻿<template>
+
+    <!-- Hero header -->
+    <div class="slds-box slds-theme_shade slds-p-around_x-large slds-m-bottom_medium">
+        <div class="slds-grid slds-grid_vertical-align-center">
+            <div class="slds-col slds-grow">
+                <h1 class="slds-text-heading_large">{greeting}</h1>
+                <lwc:if istrue={companyName}>
+                    <p class="slds-text-body_regular slds-text-color_weak slds-m-top_x-small">Your salesforce resources, training, and support — all in one place.</p>
+                </lwc:if>
+            </div>
+            <lwc:if istrue={roleName}>
+                <div class="slds-col slds-grow-none">
+                    <span class="role-pill">{roleName}</span>
+                </div>
+            </lwc:if>
+        </div>
+    </div>
+
+    <!-- 70/30 outer grid -->
+    <div class="slds-grid slds-wrap slds-gutters_medium">
+
+        <!-- Left 70% — inner 50/50 -->
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12">
+            
+            <lightning-card>
+                <h2 slot="title" class="card-title">
+                    <lightning-icon icon-name="utility:sparkles" size="medium"></lightning-icon>
+                    <span>Quick Links</span>
+                </h2>
+                <div class="slds-grid slds-wrap slds-gutters_medium slds-p-horizontal_medium slds-p-bottom_medium slds-p-top_medium">
+                    <template for:each={quickLinks} for:item="link">
+                        <div key={link.label} class="slds-col slds-size_1-of-3 slds-m-bottom_medium">
+                            <a class="action-tile" href={link.url} target="_blank">
+                                <lightning-icon icon-name={link.iconName} size="large"></lightning-icon>
+                                <span class="action-tile-content quick-link-label">
+                                    <span class="action-tile-label">{link.label}</span>
+                                    <lwc:if istrue={link.description}>
+                                        <span class="action-tile-description">{link.description}</span>
+                                    </lwc:if>
+                                </span>
+                            </a>
+                        </div>
+                    </template>
+                </div>
+            </lightning-card>
+
+            <div class="slds-grid slds-wrap slds-gutters_medium slds-m-top_medium">
+
+                <!-- Left 50: Getting Started -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                    <lightning-card>
+                        <h2 slot="title" class="card-title">
+                            <lightning-icon icon-name="utility:bookmark_alt" size="medium"></lightning-icon>
+                            <span>Getting Started</span>
+                        </h2>
+                        <div class="slds-p-horizontal_medium slds-p-bottom_medium slds-p-top_medium">
+                            <template for:each={gettingStartedLinks} for:item="link">
+                                <a key={link.label} class="action-tile slds-m-bottom_x-small" href={link.url} target="_blank">
+                                    <lightning-icon icon-name={link.iconName} size="small"></lightning-icon>
+                                    <span class="action-tile-content">
+                                        <span class="action-tile-label">{link.label}</span>
+                                        <lwc:if istrue={link.description}>
+                                            <span class="action-tile-description">{link.description}</span>
+                                        </lwc:if>
+                                    </span>
+                                    <span class="action-tile-pill">{link.salesforceArea}</span>
+                                </a>
+                            </template>
+                        </div>
+                    </lightning-card>
+                </div>
+
+                <!-- Right 50: Other Resources -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                    <lightning-card>
+                        <h2 slot="title" class="card-title">
+                            <lightning-icon icon-name="utility:apps" size="medium"></lightning-icon>
+                            <span>Resources &amp; Training</span>
+                        </h2>
+                        <div class="slds-p-horizontal_medium slds-p-bottom_medium slds-p-top_medium">
+                            <template for:each={trainingLinks} for:item="link">
+                                <a key={link.label} class="action-tile slds-m-bottom_x-small" href={link.url} target="_blank">
+                                    <lightning-icon icon-name={link.iconName} size="small"></lightning-icon>
+                                    <span class="action-tile-content">
+                                        <span class="action-tile-label">{link.label}</span>
+                                        <lwc:if istrue={link.description}>
+                                            <span class="action-tile-description">{link.description}</span>
+                                        </lwc:if>
+                                    </span>
+                                    <span class="action-tile-pill">{link.salesforceArea}</span>
+                                </a>
+                            </template>
+                        </div>
+                    </lightning-card>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Right 30%: Need Help / Support -->
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+            <lightning-card>
+                <h2 slot="title" class="card-title">
+                    <lightning-icon icon-name="utility:help" size="medium"></lightning-icon>
+                    <span>Need Help</span>
+                </h2>
+                <div class="slds-p-horizontal_medium slds-p-bottom_medium slds-p-top_medium">
+                    <template for:each={supportLinks} for:item="link">
+                        <a key={link.label} class="action-tile slds-m-bottom_x-small" href={link.url} target="_blank">
+                            <lightning-icon icon-name={link.iconName} size="small"></lightning-icon>
+                            <span class="action-tile-content">
+                                <span class="action-tile-label">{link.label}</span>
+                                <lwc:if istrue={link.description}>
+                                    <span class="action-tile-description">{link.description}</span>
+                                </lwc:if>
+                            </span>
+                            <span class="action-tile-pill">{link.salesforceArea}</span>
+                        </a>
+                    </template>
+                </div>
+            </lightning-card>
+        </div>
+
+    </div>
+
+</template>
