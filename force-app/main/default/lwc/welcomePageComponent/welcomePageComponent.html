@@ -41,12 +41,30 @@
 
                 <!-- Left 50: Getting Started -->
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
-                    <lightning-card title="Getting Started" icon-name="utility:sparkles"></lightning-card>
+                    <lightning-card title="Getting Started" icon-name="utility:sparkles">
+                        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                            <template for:each={gettingStartedLinks} for:item="link">
+                                <a key={link.label} class="action-tile slds-m-bottom_x-small" href={link.url} target="_blank">
+                                    <lightning-icon icon-name={link.iconName} size="small"></lightning-icon>
+                                    <span class="action-tile-label">{link.label}</span>
+                                </a>
+                            </template>
+                        </div>
+                    </lightning-card>
                 </div>
 
                 <!-- Right 50: Other Resources -->
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
-                    <lightning-card title="Resources & Training" icon-name="utility:apps"></lightning-card>
+                    <lightning-card title="Resources &amp; Training" icon-name="utility:apps">
+                        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                            <template for:each={trainingLinks} for:item="link">
+                                <a key={link.label} class="action-tile slds-m-bottom_x-small" href={link.url} target="_blank">
+                                    <lightning-icon icon-name={link.iconName} size="small"></lightning-icon>
+                                    <span class="action-tile-label">{link.label}</span>
+                                </a>
+                            </template>
+                        </div>
+                    </lightning-card>
                 </div>
 
             </div>
@@ -54,7 +72,16 @@
 
         <!-- Right 30%: Need Help / Support -->
         <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
-            <lightning-card title="Need Help?" icon-name="utility:help"></lightning-card>
+            <lightning-card title="Need Help?" icon-name="utility:help">
+                <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                    <template for:each={supportLinks} for:item="link">
+                        <a key={link.label} class="action-tile slds-m-bottom_x-small" href={link.url} target="_blank">
+                            <lightning-icon icon-name={link.iconName} size="small"></lightning-icon>
+                            <span class="action-tile-label">{link.label}</span>
+                        </a>
+                    </template>
+                </div>
+            </lightning-card>
         </div>
 
     </div>
