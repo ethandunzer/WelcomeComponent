@@ -1,5 +1,123 @@
 # WelcomeComponent
 
+A Salesforce Lightning Web Component (LWC) that serves as a personalized home page and central resource hub. It delivers a time-aware greeting, displays the user's role, and surfaces dynamic resource links driven by Custom Metadata Type records with role-based and user-type visibility filtering.
+
+---
+
+## Table of Contents
+
+- [Features](#features)
+- [Custom Metadata Type Setup](#custom-metadata-type-setup)
+- [User Object Fields Referenced](#user-object-fields-referenced)
+- [Deployment](#deployment)
+- [Layout](#layout)
+- [Resource Filtering Logic](#resource-filtering-logic)
+- [Contributing](#contributing)
+
+---
+
+## Features
+
+- **Time-aware, timezone-aware greeting** — Displays "Good morning/afternoon/evening/night, [First Name]!" using the running user's Salesforce `TimeZoneSidKey`.
+- **Role pill** — Shows the user's assigned Role Name in the hero header.
+- **Dynamic resource links** — Four card sections populated from `Welcome_Resource_Link__mdt` records, filtered server-side by `User_Type__c` and `Salesforce_Area__c`.
+- **Empty-state messaging** — Each card displays a contextual message when no records are available.
+- **Error notifications** — Wire failures surface as sticky toast messages with the specific server error.
+
+---
+
+## Custom Metadata Type Setup
+
+The component reads from `Welcome_Resource_Link__mdt`. All field definitions are included in the source and deployed automatically.
+
+| Field Label      | API Name             | Type       | Description                                                              |
+|------------------|----------------------|------------|--------------------------------------------------------------------------|
+| Label            | `MasterLabel`        | Text       | Display name shown on the link button                                    |
+| URL              | `URL__c`             | URL        | Target link destination (opens in new tab)                               |
+| Icon Name        | `Icon_Name__c`       | Text       | SLDS icon (e.g. `utility:bookmark`, `standard:case`). Defaults to `utility:chevronright` if blank. |
+| Resource Type    | `Resource_Type__c`   | Picklist   | `Quick Link`, `Getting Started`, `Training`, `Support`                   |
+| Salesforce Area  | `Salesforce_Area__c` | Picklist   | `General`, `CRM`, `PSA`, `SMS`, `OBO`, `INV`, `SC`, `NZC`               |
+| User Type        | `User_Type__c`       | Picklist   | `Both` (default), `Internal`, `External` — controls role-based visibility |
+| Description      | `Description__c`     | Long Text  | Optional subtitle shown beneath the link label                           |
+| Sort Order       | `Sort_Order__c`      | Number     | Ascending integer controlling render order within each card              |
+| Is Active        | `Is_Active__c`       | Checkbox   | Only checked records are returned (defaults to true)                     |
+
+---
+
+## User Object Fields Referenced
+
+`getUserContext` queries:
+
+| Field             | Usage                                      |
+|-------------------|--------------------------------------------|
+| `FirstName`       | Personalised greeting                      |
+| `TimeZoneSidKey`  | Timezone-aware time-of-day calculation     |
+| `UserRole.Name`   | Role pill in the hero header               |
+
+`getResourceLinks` queries:
+
+| Field           | Usage                              |
+|-----------------|------------------------------------|
+| `UserRole.Name` | Server-side `User_Type__c` filter  |
+
+---
+
+## Deployment
+
+```bash
+sf project deploy start --ignore-conflicts --target-org <your-org-alias>
+```
+
+After deploying, add the component to a Home Page or App Page in Lightning App Builder.
+
+---
+
+## Layout
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  Good morning, Sarah!                          [ Role Name ]    │  ← Hero header
+└─────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────┐
+│  Quick Links  (3-column grid, Resource Type = Quick Link)       │
+└──────────────────────────────────────────────────────┘
+
+┌─────────────────────────┐  ┌─────────────────────────┐  ┌────────────────┐
+│  Getting Started        │  │  Resources & Training    │  │  Need Help     │
+│  (Resource Type =       │  │  (Resource Type =        │  │  (Resource     │
+│   Getting Started)      │  │   Training)              │  │   Type =       │
+│                         │  │                          │  │   Support)     │
+└─────────────────────────┘  └─────────────────────────┘  └────────────────┘
+     ← 70% column (50/50 inner split) →                    ← 30% column →
+```
+
+---
+
+## Resource Filtering Logic
+
+A `Welcome_Resource_Link__mdt` record is returned only when:
+
+1. `Is_Active__c = true`
+2. `User_Type__c` passes the role check:
+
+| `User_Type__c` | Visible to roles |
+|---|---|
+| `Both` (or blank) | All users |
+| `Internal` | `Share All`, `System Admins`, `Internal - Users` |
+| `External` | `Share All`, `System Admins`, `External - Users` |
+
+The CMDT query runs with `WITH SYSTEM_MODE` so all profiles can read metadata records regardless of object-level permissions on their profile.
+
+---
+
+## Contributing
+
+1. Create a feature branch from `main`.
+2. Make changes and ensure all tests pass before opening a pull request.
+3. Update this README if behavior or setup requirements change.
+
+
 A Salesforce Lightning Web Component (LWC) that serves as a personalized home page and central resource hub for Salesforce users. The component delivers a dynamic greeting, smart onboarding logic based on user tenure, a dedicated support card, and role/area-filtered resource links driven by Custom Metadata Type records.
 
 ---
