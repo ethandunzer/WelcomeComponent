@@ -24,7 +24,7 @@ public with sharing class WelcomePageController {
     public static List<ResourceLink> getResourceLinks() {
         try {
             List<Welcome_Resource_Link__mdt> records = [
-                SELECT MasterLabel, URL__c, Icon_Name__c, Resource_Type__c, Sort_Order__c
+                SELECT MasterLabel, URL__c, Icon_Name__c, Resource_Type__c, Salesforce_Area__c, Sort_Order__c
                 FROM Welcome_Resource_Link__mdt
                 WHERE Is_Active__c = true
                 ORDER BY Sort_Order__c ASC NULLS LAST
@@ -37,6 +37,7 @@ public with sharing class WelcomePageController {
                 rl.url            = r.URL__c;
                 rl.iconName       = r.Icon_Name__c;
                 rl.resourceType   = r.Resource_Type__c;
+                rl.salesforceArea = r.Salesforce_Area__c;
                 rl.sortOrder      = r.Sort_Order__c;
                 links.add(rl);
             }
@@ -57,6 +58,7 @@ public with sharing class WelcomePageController {
         @AuraEnabled public String  url;
         @AuraEnabled public String  iconName;
         @AuraEnabled public String  resourceType;
+        @AuraEnabled public String  salesforceArea;
         @AuraEnabled public Decimal sortOrder;
     }
 

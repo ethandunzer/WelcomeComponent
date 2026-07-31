@@ -24,7 +24,19 @@
 
 .action-tile-label {
     margin-left: 0.75rem;
+    flex-grow: 1;
     font-size: 0.875rem;
     font-weight: 600;
     color: #181818;
+}
+
+.action-tile-pill {
+    margin-left: 0.5rem;
+    padding: 0.1rem 0.6rem;
+    background-color: #e0e5ee;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #3e3e3c;
+    white-space: nowrap;
 }
