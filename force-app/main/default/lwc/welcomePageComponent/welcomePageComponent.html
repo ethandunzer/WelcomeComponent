@@ -24,7 +24,12 @@
                         <div key={link.label} class="slds-col slds-size_1-of-3 slds-m-bottom_medium">
                             <a class="action-tile" href={link.url} target="_blank">
                                 <lightning-icon icon-name={link.iconName} size="large"></lightning-icon>
-                                <span class="action-tile-label quick-link-label">{link.label}</span>
+                                <span class="action-tile-content quick-link-label">
+                                    <span class="action-tile-label">{link.label}</span>
+                                    <lwc:if istrue={link.description}>
+                                        <span class="action-tile-description">{link.description}</span>
+                                    </lwc:if>
+                                </span>
                             </a>
                         </div>
                     </template>
