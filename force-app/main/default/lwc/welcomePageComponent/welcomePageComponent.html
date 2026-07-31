@@ -2,10 +2,19 @@
 
     <!-- Hero header -->
     <div class="slds-box slds-theme_shade slds-p-around_x-large slds-m-bottom_medium">
-        <h1 class="slds-text-heading_large">{greeting}</h1>
-        <lwc:if istrue={companyName}>
-            <p class="slds-text-body_regular slds-text-color_weak slds-m-top_x-small">Your salesforce resources, training, and support — all in one place.</p>
-        </lwc:if>
+        <div class="slds-grid slds-grid_vertical-align-center">
+            <div class="slds-col slds-grow">
+                <h1 class="slds-text-heading_large">{greeting}</h1>
+                <lwc:if istrue={companyName}>
+                    <p class="slds-text-body_regular slds-text-color_weak slds-m-top_x-small">Your salesforce resources, training, and support — all in one place.</p>
+                </lwc:if>
+            </div>
+            <lwc:if istrue={roleName}>
+                <div class="slds-col slds-grow-none">
+                    <span class="role-pill">{roleName}</span>
+                </div>
+            </lwc:if>
+        </div>
     </div>
 
     <!-- 70/30 outer grid -->

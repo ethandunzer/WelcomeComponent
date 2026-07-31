@@ -1,3 +1,14 @@
+.role-pill {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    background-color: #0070d2;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+}
+
 .card-title {
     display: flex;
     align-items: center;

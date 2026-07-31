@@ -60,6 +60,10 @@ export default class WelcomePageComponent extends LightningElement {
         return firstName ? `${salutation}, ${firstName}!` : `${salutation}!`;
     }
 
+    get roleName() {
+        return this.userContext?.roleName || '';
+    }
+
     // ── Resource link getters ─────────────────────────────────────────────
 
     get gettingStartedLinks() {

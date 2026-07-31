@@ -4,7 +4,7 @@ public with sharing class WelcomePageController {
     public static UserContext getUserContext() {
         try {
             User u = [
-                SELECT FirstName, TimeZoneSidKey
+                SELECT FirstName, TimeZoneSidKey, UserRole.Name
                 FROM User
                 WHERE Id = :UserInfo.getUserId()
                 LIMIT 1
@@ -13,6 +13,7 @@ public with sharing class WelcomePageController {
             UserContext ctx  = new UserContext();
             ctx.firstName    = u.FirstName;
             ctx.timeZoneSid  = u.TimeZoneSidKey;
+            ctx.roleName     = u.UserRole?.Name;
             return ctx;
 
         } catch (Exception e) {
@@ -36,6 +37,7 @@ public with sharing class WelcomePageController {
                        Salesforce_Area__c, Description__c, User_Type__c, Sort_Order__c
                 FROM Welcome_Resource_Link__mdt
                 WHERE Is_Active__c = true
+                WITH SYSTEM_MODE
                 ORDER BY Sort_Order__c ASC NULLS LAST
             ];
 
@@ -85,6 +87,7 @@ public with sharing class WelcomePageController {
     public class UserContext {
         @AuraEnabled public String firstName;
         @AuraEnabled public String timeZoneSid;
+        @AuraEnabled public String roleName;
     }
 
     public class ResourceLink {
